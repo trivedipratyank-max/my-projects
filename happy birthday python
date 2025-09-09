@@ -1,0 +1,78 @@
+import turtle
+import time
+import random
+
+screen = turtle.Screen()
+screen.bgcolor("lightblue")
+screen.title("🎉 Happy Birthday! Sotdu🎂")
+screen.colormode(255)  
+
+cake = turtle.Turtle()
+cake.speed(0)
+cake.hideturtle()
+
+def draw_layer(x, y, width, height, color):
+    cake.penup()
+    cake.goto(x, y)
+    cake.color(color)
+    cake.begin_fill()
+    for _ in range(2):
+        cake.forward(width)
+        cake.left(90)
+        cake.forward(height)
+        cake.left(90)
+    cake.end_fill()
+
+def draw_candle(x, y):
+    cake.penup()
+    cake.goto(x, y)
+    cake.color("white")
+    cake.setheading(90)
+    cake.pendown()
+    cake.begin_fill()
+    for _ in range(2):
+        cake.forward(20)
+        cake.right(90)
+        cake.forward(5)
+        cake.right(90)
+    cake.end_fill()
+
+def draw_flame(x, y):
+    flame = turtle.Turtle()
+    flame.penup()
+    flame.goto(x, y)
+    flame.shape("circle")
+    flame.color(random.choice([(255, 255, 0), (255, 165, 0), (255, 0, 0)]))
+    flame.shapesize(0.3)
+    flame.speed(0)
+    flame.showturtle()
+    return flame
+
+draw_layer(-75, -100, 150, 40, "chocolate")
+draw_layer(-60, -60, 120, 40, "pink")
+draw_layer(-45, -20, 90, 40, "violet")
+
+candle_positions = [-30, 0, 30]
+flames = []
+for pos in candle_positions:
+    draw_candle(pos, 20)
+    flames.append(draw_flame(pos + 2, 40))
+
+message = turtle.Turtle()
+message.hideturtle()
+message.penup()
+message.goto(0, 100)
+message.color("purple")
+message.write("🎈 Happy Birthday Sotdu! 🎉", align="center", font=("Comic Sans MS", 20, "bold"))
+
+
+
+def flicker():
+    for flame in flames:
+        flame.color(random.choice([(255, 255, 0), (255, 165, 0), (255, 0, 0)]))
+        flame.shapesize(random.uniform(0.2, 0.5))
+    screen.ontimer(flicker, 300)
+
+flicker()
+
+turtle.done()# my-projects
